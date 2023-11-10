@@ -31,6 +31,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun WeatherSplashScreen(navController: NavController) {
 
+    val defaultCity = "San Diego"
     val scale = remember { Animatable(0f) }
 
     LaunchedEffect(
@@ -47,7 +48,7 @@ fun WeatherSplashScreen(navController: NavController) {
                 )
             )
             delay(500L)
-            navController.navigate(route = WeatherScreen.MainScreen.name)
+            navController.navigate(route = WeatherScreen.MainScreen.name + "/$defaultCity")
         }
     )
 

@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.example.udemy_paulo_weatherforecast.data.DataOrException
 import com.example.udemy_paulo_weatherforecast.model.Weather
 import com.example.udemy_paulo_weatherforecast.model.WeatherItem
+import com.example.udemy_paulo_weatherforecast.navigation.WeatherScreen
 import com.example.udemy_paulo_weatherforecast.util.formatDate
 import com.example.udemy_paulo_weatherforecast.util.formatDecimals
 import com.example.udemy_paulo_weatherforecast.widget.*
@@ -28,12 +29,15 @@ import com.example.udemy_paulo_weatherforecast.widget.*
 @Composable
 fun MainScreen(
     navController: NavController,
-    mainScreenViewModel: MainScreenViewModel = hiltViewModel()
+    mainScreenViewModel: MainScreenViewModel = hiltViewModel(),
+    city: String?
 ) {
+    Log.d(TAG, "MainScreen: $city")
+
     val weatherData = produceState<DataOrException<Weather, Boolean, Exception>>(
         initialValue = DataOrException(isLoading = true)
     ) {
-        value = mainScreenViewModel.getWeather(city = "Seattle")
+        value = mainScreenViewModel.getWeather(city = "$city")
     }.value
 
     if (weatherData.isLoading == true) {
@@ -51,7 +55,10 @@ fun MainScaffold(weather: Weather, navController: NavController) {
             Surface(shadowElevation = 5.dp) {
                 WeatherAppBar(
                     title = "${weather.city.name}, ${weather.city.country}",
-                    navController = navController
+                    navController = navController,
+                    onAddActionClicked = {
+                        navController.navigate(WeatherScreen.SearchScreen.name)
+                    }
                 ) {
                     Log.d(TAG, "MainScaffold: Button Clicked")
                 }
