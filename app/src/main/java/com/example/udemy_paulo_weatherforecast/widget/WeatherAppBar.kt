@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.udemy_paulo_weatherforecast.navigation.WeatherScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -118,12 +119,7 @@ fun ShowSettingDropDownMenu(isDialogShowing: MutableState<Boolean>, navControlle
                         isExpanded = false
                         isDialogShowing.value = false
                     },
-                    text = {
-                        Text(
-                            text = text,
-                            fontWeight = FontWeight.Light
-                        )
-                    },
+
                     leadingIcon = {
                         Icon(
                             imageVector = when (text) {
@@ -133,6 +129,23 @@ fun ShowSettingDropDownMenu(isDialogShowing: MutableState<Boolean>, navControlle
                             },
                             contentDescription = "",
                             tint = Color.LightGray
+                        )
+                    },
+
+                    text = {
+                        Text(
+                            text = text,
+                            modifier = Modifier
+                                .clickable {
+                                    navController?.navigate(
+                                        when (text) {
+                                            "About" -> WeatherScreen.AboutScreen.name
+                                            "Favorites" -> WeatherScreen.FavoriteScreen.name
+                                            else -> WeatherScreen.SettingScreen.name
+                                        }
+                                    )
+                                },
+                            fontWeight = FontWeight.Light
                         )
                     }
                 )
