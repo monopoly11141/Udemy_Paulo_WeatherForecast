@@ -10,8 +10,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(private val weatherRepository: WeatherRepository) : ViewModel() {
 
-    suspend fun getWeather(city: String): DataOrException<Weather, Boolean, Exception> {
-        return weatherRepository.getWeather(cityQuery = city)
+    suspend fun getWeather(city: String, unit: String): DataOrException<Weather, Boolean, Exception> {
+        return weatherRepository.getWeather(
+            cityQuery = city,
+            unit = unit
+        )
     }
 
 }

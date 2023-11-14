@@ -27,7 +27,7 @@ import com.example.udemy_paulo_weatherforecast.util.formatDecimals
 
 
 @Composable
-fun HumidityWindPressureRow(weather: WeatherItem) {
+fun HumidityWindPressureRow(weather: WeatherItem, isImperial: Boolean) {
     Row(
         modifier = Modifier
             .padding(12.dp)
@@ -81,7 +81,7 @@ fun HumidityWindPressureRow(weather: WeatherItem) {
             )
 
             Text(
-                text = "${weather.clouds} mph",
+                text = formatDecimals(weather.speed) + if (isImperial) "mph" else "m/s",
                 style = MaterialTheme.typography.labelSmall
             )
         }
